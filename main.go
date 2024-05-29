@@ -27,12 +27,18 @@ func snippetCreate(res http.ResponseWriter, req *http.Request) {
 	 res.Write([]byte("Display a form for creating a new snippet...")) 
 }
 
+func snippetCreatePost(res http.ResponseWriter, req *http.Request) {
+	res.WriteHeader(http.StatusCreated)
+	res.Write([]byte("Posting a new snippet..."))
+}
+
 func main() {
 	mux := http.NewServeMux()
 
-	mux.HandleFunc("/{$}", home)
-	mux.HandleFunc("/snippet/view/{id}", snippetView)
-	mux.HandleFunc("/snippet/create", snippetCreate)
+	mux.HandleFunc("GET /{$}", home)
+	mux.HandleFunc("GET /snippet/view/{id}", snippetView)
+	mux.HandleFunc("GET /snippet/create", snippetCreate)
+	mux.HandleFunc("POST /snippet/create/post", snippetCreatePost)
 
 	log.Print("Running on localhost 4000")
 
